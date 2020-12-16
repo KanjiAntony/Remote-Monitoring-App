@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.remotemonitoringapp">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".communication_design_employee"></activity>
+        <activity android:name=".communication_employee" />
+        <activity android:name=".aob_design_employee" />
+        <activity android:name=".aob_employee" />
+        <activity android:name=".comment_design_employee" />
+        <activity android:name=".comment_employee" />
+        <activity android:name=".taskpage_employee" />
+        <activity android:name=".task_employee" />
+        <activity android:name=".communication_design_employer" />
+        <activity android:name=".aob_design_employer" />
+        <activity android:name=".comment_design_employer" />
+        <activity android:name=".reports_employer" />
+        <activity android:name=".communication_employer" />
+        <activity android:name=".aob_employer" />
+        <activity android:name=".comment_employer" />
+        <activity android:name=".taskpage_employer" />
+        <activity android:name=".upload_employer" />
+        <activity android:name=".MainActivity2" />
+        <activity android:name=".welcome" />
+        <activity android:name=".founderRegister" />
+        <activity android:name=".Task" />
+        <activity android:name=".employeeLogin" />
+        <activity android:name=".founderLogin" />
+        <activity android:name=".MainActivity">
+            <intent-filter>
+
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

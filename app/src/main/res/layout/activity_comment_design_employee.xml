@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".aob_design_employee">
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="5dp"
+        app:cardBackgroundColor="#fff"
+        app:contentPadding="30dp"
+        android:layout_margin="20dp">
+
+        <TextView
+            android:id="@+id/commentsent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="abcde"
+            android:textColor="#000"
+            android:textSize="12sp">
+        </TextView>
+
+        <TextView
+            android:id="@+id/timecommentsent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right|bottom"
+            android:layout_marginTop="15dp"
+            android:text="bb">
+
+        </TextView>
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>

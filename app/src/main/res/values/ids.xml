@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="loginBtn" type="id" />
+    <item name="dataList" type="id"/>
+    <item name="aob" type="id"/>
+    <item name="personal_communication" type="id"/>
+    <item name="communication" type="id"/>
+    <item name="tasks" type="id"/>
+</resources>

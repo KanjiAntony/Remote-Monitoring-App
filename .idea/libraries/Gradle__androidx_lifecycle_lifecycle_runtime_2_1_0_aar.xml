@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.lifecycle:lifecycle-runtime:2.1.0@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/f0ac2a258fe9da3013fd9e5b34e16297/lifecycle-runtime-2.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/f0ac2a258fe9da3013fd9e5b34e16297/lifecycle-runtime-2.1.0/res" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/b9c719f8c8a6e3bc737b7329dded8845/lifecycle-runtime-2.1.0/res" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/57f35e01e9c44a02b2713e391ed999ad/lifecycle-runtime-2.1.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/57f35e01e9c44a02b2713e391ed999ad/lifecycle-runtime-2.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/57f35e01e9c44a02b2713e391ed999ad/lifecycle-runtime-2.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3a585cdae8051e11e543a56709eebc2d/lifecycle-runtime-2.1.0/res" />
+      <root url="file://$PROJECT_DIR$/gradle/wrapper/caches/transforms-2/files-2.1/3a585cdae8051e11e543a56709eebc2d/lifecycle-runtime-2.1.0/res" />
+      <root url="jar://$PROJECT_DIR$/gradle/wrapper/caches/transforms-2/files-2.1/3a585cdae8051e11e543a56709eebc2d/lifecycle-runtime-2.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/gradle/wrapper/caches/transforms-2/files-2.1/3a585cdae8051e11e543a56709eebc2d/lifecycle-runtime-2.1.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-runtime/2.1.0/533a0cd1a095abbdfd08a49c4d34bd0713977034/lifecycle-runtime-2.1.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gradle/wrapper/caches/modules-2/files-2.1/androidx.lifecycle/lifecycle-runtime/2.1.0/533a0cd1a095abbdfd08a49c4d34bd0713977034/lifecycle-runtime-2.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

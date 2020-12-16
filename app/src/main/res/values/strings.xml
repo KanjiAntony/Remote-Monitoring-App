@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Remote Monitoring App</string>
+    <string name="text"><![CDATA[Clicked->]]></string>
+</resources>

@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.firebase:firebase-storage:19.1.1@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/0322d0bfaa71ed0426a8ea23d5bad594/jetified-firebase-storage-19.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/0322d0bfaa71ed0426a8ea23d5bad594/jetified-firebase-storage-19.1.1/res" />
+      <root url="file://$PROJECT_DIR$/../.gradle/caches/transforms-2/files-2.1/0322d0bfaa71ed0426a8ea23d5bad594/jetified-firebase-storage-19.1.1/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4421a7e80d04cd3bc4729008f192c55f/jetified-firebase-storage-19.1.1/res" />
+      <root url="jar://$PROJECT_DIR$/gradle/wrapper/caches/transforms-2/files-2.1/4421a7e80d04cd3bc4729008f192c55f/jetified-firebase-storage-19.1.1/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/gradle/wrapper/caches/transforms-2/files-2.1/4421a7e80d04cd3bc4729008f192c55f/jetified-firebase-storage-19.1.1/AndroidManifest.xml" />
+      <root url="file://$PROJECT_DIR$/gradle/wrapper/caches/transforms-2/files-2.1/4421a7e80d04cd3bc4729008f192c55f/jetified-firebase-storage-19.1.1/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-storage/19.1.1/f945d8ee5b6b56632f0b0e212c9daa112935662f/firebase-storage-19.1.1-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gradle/wrapper/caches/modules-2/files-2.1/com.google.firebase/firebase-storage/19.1.1/f945d8ee5b6b56632f0b0e212c9daa112935662f/firebase-storage-19.1.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.google.firebase/firebase-storage/19.1.1/b585a214cb8e7f79243ddfd4e042de835dd1b141/firebase-storage-19.1.1-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/gradle/wrapper/caches/modules-2/files-2.1/com.google.firebase/firebase-storage/19.1.1/b585a214cb8e7f79243ddfd4e042de835dd1b141/firebase-storage-19.1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

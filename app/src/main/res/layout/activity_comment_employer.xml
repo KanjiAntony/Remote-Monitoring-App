@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout tools:context=".comment_employer"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#F2ECFF">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="#000"
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/recipient"
+        android:text="Receiver Id"
+        android:textSize="16sp"
+        android:textColor="#fff"
+        android:layout_marginLeft="25dp"/>
+
+</androidx.appcompat.widget.Toolbar>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/card"
+        android:layout_below="@id/toolbar"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:layout_margin="30dp"
+        app:contentPadding="30dp">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#000"
+        android:text="Task Description"> </TextView>
+
+</androidx.cardview.widget.CardView>
+
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/scrollable"
+        android:layout_below="@id/card"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:scrollbars="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_margin="30dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</ScrollView>
+
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+    <EditText
+        android:background="#fff"
+        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:textSize="12sp"
+        android:textColor="#000"
+        android:text="Type Comment"
+        android:padding="20dp"/>
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="#000"
+            android:padding="20dp"
+            android:src="@drawable/arrow"></ImageButton>
+
+</LinearLayout>
+
+</RelativeLayout>
