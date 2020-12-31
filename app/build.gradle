@@ -44,12 +44,20 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:21.7.1'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
+    implementation 'com.firebase:firebase-client-android:2.5.2'
+
     implementation 'com.android.volley:volley:1.1.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //implementation platform('com.google.firebase:firebase-bom:26.2.0')
+
     implementation 'com.firebaseui:firebase-ui-database:6.2.0'
+
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+
+    implementation 'com.google.firebase:firebase-database'
 
 }

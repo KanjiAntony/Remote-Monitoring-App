@@ -31,6 +31,7 @@
         <activity android:name=".MainActivity2" />
         <activity android:name=".welcome" />
         <activity android:name=".founderRegister" />
+        <activity android:name=".employeeRegister" />
         <activity android:name=".Task" />
         <activity android:name=".employeeLogin" />
         <activity android:name=".founderLogin" />

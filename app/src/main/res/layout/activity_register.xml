@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swiperefresh_recycler"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/search_bar"
+    android:scrollbars="vertical">
+
+<ScrollView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
@@ -87,6 +95,27 @@
         app:layout_constraintVertical_bias="0.050000012" />
 
     <EditText
+        android:id="@+id/Phone"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#F2ECFF"
+        android:ems="10"
+        android:hint="Phone number"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/LastName"
+        app:layout_constraintVertical_bias="0.050000012" />
+
+    <EditText
         android:id="@+id/Email"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -103,7 +132,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LastName"
+        app:layout_constraintTop_toBottomOf="@id/Phone"
         app:layout_constraintVertical_bias="0.050000012" />
 
     <Spinner
@@ -130,13 +159,14 @@
     <Spinner
         android:id="@+id/Department"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="#F2ECFF"
+        android:dropDownWidth="wrap_content"
         android:ems="10"
-        android:padding="10dp"
         android:hint="Department"
+        android:padding="10dp"
         android:textColor="#000"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -148,7 +178,7 @@
         app:layout_constraintVertical_bias="0.050000012" />
 
 
-    <RadioButton
+    <RadioGroup
         android:id="@+id/Position"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -209,6 +239,26 @@
         app:layout_constraintTop_toBottomOf="@+id/ID"
         app:layout_constraintVertical_bias="0.050000012" />
 
+    <EditText
+        android:id="@+id/ConfirmPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="#F2ECFF"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:textColor="#000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Password"
+        app:layout_constraintVertical_bias="0.050000012" />
+
     <Button
         android:id="@+id/registerBtn"
         android:layout_width="0dp"
@@ -223,7 +273,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Password" />
+        app:layout_constraintTop_toBottomOf="@id/ConfirmPassword" />
 
     <TextView
         android:id="@+id/createText"
@@ -253,3 +303,5 @@
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -33,6 +33,16 @@
             android:text="bb">
 
         </TextView>
+
+        <TextView
+            android:id="@+id/commentBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:gravity="right|bottom"
+            android:text="bb">
+
+        </TextView>
     </androidx.cardview.widget.CardView>
 
 

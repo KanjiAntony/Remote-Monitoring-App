@@ -20,7 +20,7 @@
         >
 
         <TextView
-            android:id="@+id/tasktb"
+            android:id="@+id/task_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="abcd"
@@ -30,7 +30,7 @@
         </TextView>
 
         <TextView
-            android:id="@+id/datetimetasksent"
+            android:id="@+id/datetimedeadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right|bottom"

@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,27 +24,48 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
  public class Task extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private RecyclerView recyclerView;
+     taskAdapter adapter;
+     RecyclerView recyclerView;
+     BottomNavigationView bottom_view;
+     String active_user_id;
+     Toolbar toolbar;
+     private SessionHandler session;
+     private static final String KEY_SESSION_ID = "session_id";
+     private static final String BASE_URL = "https://remote.shamalandscapes.com/Mobile/Employee/";
+     private String KEY_LOGGED = "LoggedStat";
+     private String PREF_NAME = "Pop-InSession";
+     private static final String KEY_USER_ID = "UserId";
     private FloatingActionButton floatingActionButton;
 
-    private DatabaseReference reference;
-    private FirebaseAuth mAuth;
-    private FirebaseUser mUser;
     private String onlineUserID;
 
     private ProgressDialog loader;
@@ -49,7 +73,8 @@ import java.util.Date;
     private String key = "";
     private String task;
     private String description;
-
+     Handler mHandler;
+     private RequestQueue mRequestQueue;
 
 
     @Override
@@ -57,245 +82,64 @@ import java.util.Date;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
 
+        SharedPreferences sp = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        if (sp.getBoolean(KEY_LOGGED, false)) {
+            active_user_id = sp.getString(KEY_USER_ID, "");
+        } else {
+            Intent i = new Intent(getApplicationContext(), employeeLogin.class);
+            startActivity(i);
+        }
+
+        //automatic process
+        try {
+
+            volleyJsonObjectRequest(BASE_URL + "show_manager_tasks.php");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         toolbar = findViewById(R.id.taskToolbar);
         setSupportActionBar(toolbar);
        getSupportActionBar().setTitle("Task");
-
-        recyclerView = findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        linearLayoutManager.setStackFromEnd(true);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        loader = new ProgressDialog(this);
-
-        mUser =  mAuth.getCurrentUser();
-        onlineUserID = mUser.getUid();
-        reference = FirebaseDatabase.getInstance().getReference().child("tasks").child(onlineUserID);
 
 
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addTask();
+                Intent intent = new Intent(Task.this, upload_employer.class);
+                startActivity(intent);
+                finish();
 
             }
 
         });
 
+        /*mHandler = new Handler();
+
+        mHandler.postDelayed(m_Runnable,3000);*/
+
     }
 
-            private void addTask() {
-                AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
-                LayoutInflater inflater = LayoutInflater.from(this);
+     private final Runnable m_Runnable = new Runnable()
+     {
+         public void run()
 
-                View myView = inflater.inflate(R.layout.input_file, null);
-                myDialog.setView(myView);
+         {
 
+             try {
+                 adapter.clear();
+                 volleyJsonObjectRequestAsync(BASE_URL + "show_manager_tasks.php");
+             } catch (JSONException e) {
+                 e.printStackTrace();
+             }
 
-                AlertDialog dialog = myDialog.create();
-                dialog.setCancelable(false);
-
-                final EditText task = myView.findViewById(R.id.task);
-                final EditText description = myView.findViewById((R.id.description));
-                Button save = myView.findViewById(R.id.saveBtn);
-                Button cancel = myView.findViewById(R.id.CancelBtn);
-
-                cancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
-
-                save.setOnClickListener((new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                }));
-
-                String mTask = task.getText().toString().trim();
-                String mDescription = description.getText().toString().trim();
-                String id = reference.push().getKey();
-                String date = DateFormat.getDateInstance().format(new Date());
-
-                if (TextUtils.isEmpty(mTask)) {
-                    task.setError("Task is required");
-                    return;
-                }
-
-                if (TextUtils.isEmpty(mDescription)) {
-                    task.setError("Description is required");
-                    return;
-                } else {
-                    loader.setMessage("Adding your data");
-                    loader.setCanceledOnTouchOutside(false);
-                    loader.show();
-
-                    Model model = new Model(mTask, mDescription, id, date);
-                    reference.child(id).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(Task.this, "Task has been inserted successfully", Toast.LENGTH_SHORT).show();
-                                loader.dismiss();
-                            } else {
-                                String error = task.getException().toString();
-                                Toast.makeText(Task.this, "Failed", Toast.LENGTH_SHORT).show();
-                                loader.dismiss();
-                            }
-
-                        }
-                    });
-
-
-                    dialog.dismiss();
-
-                }
-
-
-                dialog.show();
-
-
-            }
-
-     @Override
-     public void onStart(){
-        super.onStart();
-
-         FirebaseRecyclerOptions<Model> options = new FirebaseRecyclerOptions.Builder<Model>()
-                 .setQuery(reference, Model.class)
-                 .build();
-
-        FirebaseRecyclerAdapter<Model, myViewHolder> adapter = new FirebaseRecyclerAdapter<Model, myViewHolder>(options) {
-            @Override
-            protected void onBindViewHolder(@NonNull myViewHolder holder, final int position, @NonNull final Model model) {
-                holder.setDate(model.getDate());
-                holder.setTask(model.getTask());
-                holder.setDesc(model.getDescription());
-
-                holder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        key = getRef(position).getKey();
-                        task = model.getTask();
-                        description = model.getDescription();
-
-                    }
-                });
-
-            }
-
-            @NonNull
-            @Override
-            public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-               View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.retrieve_layout,parent,false);
-               return new myViewHolder(view);
-            }
-        };
-
-        recyclerView.setAdapter(adapter);
-        adapter.startListening();
-
+             mHandler.postDelayed(m_Runnable, 1000);
          }
 
+     };//runnable
 
-     public static class myViewHolder extends RecyclerView.ViewHolder{
-               View mView;
-
-                public myViewHolder(@NonNull View itemView) {
-                    super(itemView);
-                    mView = itemView;
-                }
-
-                public void setTask(String task){
-                    TextView taskTextView = mView.findViewById(R.id.taskTv);
-                    taskTextView.setText(task);
-                }
-
-                public void setDesc(String desc){
-                    TextView descTextView = mView.findViewById(R.id.descriptionTv);
-                    descTextView.setText(desc);
-                }
-
-                public void setDate(String date){
-                    TextView dateTextView = mView.findViewById(R.id.dateTv);
-
-                }
-            }
-
-            private void updateTask(){
-               AlertDialog.Builder myDialog = new AlertDialog.Builder(this);
-               LayoutInflater inflater = LayoutInflater.from(this);
-               View view = inflater.inflate(R.layout.update_data,null);
-               myDialog.setView(view);
-
-               final AlertDialog dialog = myDialog.create();
-
-               final EditText mTask = view.findViewById(R.id.mEditTextTask);
-               final EditText mDescription = view.findViewById(R.id.mEditTextDescription);
-
-               mTask.setText(task);
-               mDescription.setSelection(task.length());
-
-               mDescription.setText(description);
-               mDescription.setSelection(description.length());
-
-               Button delButton = view.findViewById(R.id.btnDelete);
-               Button updateButton = view.findViewById(R.id.btnUpdate);
-
-               updateButton.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       task = mTask.getText().toString().trim();
-                       description = mDescription.getText().toString().trim();
-
-                       String date = DateFormat.getDateInstance().format(new Date());
-
-                       Model model = new Model(task, description,key,date);
-
-                       reference.child(key).setValue(model).addOnCompleteListener(new OnCompleteListener<Void>() {
-                           @Override
-                           public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
-                               if (task.isSuccessful()){
-                                   Toast.makeText(Task.this, "Data has been updated successfully", Toast.LENGTH_SHORT).show();
-                               }else {
-                                   String error = task.getException().toString();
-                                   Toast.makeText(Task.this, "Update failed"+error, Toast.LENGTH_SHORT).show();
-                               }
-                           }
-                       });
-
-                       dialog.dismiss();
-                   }
-               });
-
-               delButton.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View view) {
-                       reference.child(key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-                           @Override
-                           public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
-                               if(task.isSuccessful()){
-                                   Toast.makeText(Task.this, "Task deleted successfully", Toast.LENGTH_SHORT).show();
-                               }else{
-                                   String error = task.getException().toString();
-                                   Toast.makeText(Task.this, "Failed to delete task"+error, Toast.LENGTH_SHORT).show();
-
-                               }
-                           }
-                       });
-
-                       dialog.dismiss();
-                   }
-               });
-
-               dialog.show();
-
-            }
 
      @Override
      public boolean onCreateOptionsMenu(Menu menu) {
@@ -307,12 +151,150 @@ import java.util.Date;
      public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.back:
-            mAuth.signOut();
                 Intent intent = new Intent(Task.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
         }
          return super.onOptionsItemSelected(item);
+     }
+
+     public void load_recycler(String json) throws JSONException
+     {
+         JSONArray jsonArray = new JSONArray(json);
+
+         List<taskData> list = new ArrayList<>();
+         //list = getData();
+
+         for(int i=0; i<jsonArray.length();i++) {
+             final JSONObject jObject = (JSONObject)jsonArray.get(i);
+             list.add(new taskData("Name :"+jObject.getString("task"),"Deadline: "+jObject.getString("deadline"),
+                     "Employee: "+jObject.getString("employee"),jObject.getString("task_id")));
+
+         }
+
+         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+         adapter = new taskAdapter(list, getApplication());
+         recyclerView.setAdapter(adapter);
+         recyclerView.setLayoutManager(new LinearLayoutManager(Task.this));
+
+     }
+
+     public void volleyJsonObjectRequest(String url) throws JSONException {
+
+         String  REQUEST_TAG = "managerTasks";
+
+         final ProgressDialog progressDialog = new ProgressDialog(this);
+         progressDialog.setMessage("Accessing available tasks...");
+         progressDialog.show();
+
+         StringRequest jsonObjectReq = new StringRequest(Request.Method.POST,url,
+                 new Response.Listener<String>() {
+
+                     @Override
+                     public void onResponse(String response) {
+
+
+                         progressDialog.hide();
+
+                         try {
+
+                             //Toast.makeText(Task.this,response,Toast.LENGTH_LONG).show();
+
+                             load_recycler(response);
+
+                         } catch(JSONException e) {
+                             e.printStackTrace();
+                         }
+
+                     }
+                 }, new Response.ErrorListener() {
+             @Override
+             public void onErrorResponse(VolleyError error) {
+                 VolleyLog.d("Error: " + error.getMessage());
+                 progressDialog.hide();
+             }
+         }){
+
+             @Override
+             protected Map<String,String> getParams() {
+                 Map<String,String> request_map = new HashMap<>();
+                 //request_map.put(KEY_SESSION_ID,active_user_id);
+                 request_map.put(KEY_SESSION_ID,active_user_id);
+                 return request_map;
+             }
+
+
+         };
+
+         // Adding JsonObject request to request queue
+         //mRequestQueue.add(jsonObjectReq);
+         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
+     }
+
+     public void volleyJsonObjectRequestAsync(String url) throws JSONException {
+
+         String  REQUEST_TAG = "managerTasks";
+
+         /*final ProgressDialog progressDialog = new ProgressDialog(this);
+         progressDialog.setMessage("Accessing available tasks...");
+         progressDialog.show();*/
+
+         // Instantiate the cache
+         Cache cache = new DiskBasedCache(getCacheDir(),1024*1024*100); // 5MB cache size
+
+         // Setup the network to use HttpURLConnection as the HTTP client
+         Network network = new BasicNetwork(new HurlStack());
+
+         // Instantiate the RequestQueue with cache and network
+         mRequestQueue = new RequestQueue(cache,network);
+
+         // Start the RequestQueue
+         mRequestQueue.start();
+
+         StringRequest jsonObjectReq = new StringRequest(Request.Method.POST,url,
+                 new Response.Listener<String>() {
+
+                     @Override
+                     public void onResponse(String response) {
+
+
+                         //progressDialog.hide();
+
+                         try {
+
+                             //Toast.makeText(Task.this,response,Toast.LENGTH_LONG).show();
+
+                             load_recycler(response);
+
+                         } catch(JSONException e) {
+                             e.printStackTrace();
+                         }
+
+                     }
+                 }, new Response.ErrorListener() {
+             @Override
+             public void onErrorResponse(VolleyError error) {
+                 VolleyLog.d("Error: " + error.getMessage());
+                 //progressDialog.hide();
+             }
+         }){
+
+             @Override
+             protected Map<String,String> getParams() {
+                 Map<String,String> request_map = new HashMap<>();
+                 //request_map.put(KEY_SESSION_ID,active_user_id);
+                 request_map.put(KEY_SESSION_ID,active_user_id);
+                 return request_map;
+             }
+
+
+         };
+
+         // Adding JsonObject request to request queue
+         mRequestQueue.add(jsonObjectReq);
+         // Adding JsonObject request to request queue
+         //mRequestQueue.add(jsonObjectReq);
+         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
      }
  }

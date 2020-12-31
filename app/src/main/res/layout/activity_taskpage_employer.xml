@@ -13,14 +13,13 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         app:cardBackgroundColor="#fff"
-        app:contentPadding="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        >
+        app:contentPadding="50dp">
 
         <TextView
-            android:id="@+id/tasktb"
+            android:id="@+id/task_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="abcd"
@@ -30,11 +29,21 @@
         </TextView>
 
         <TextView
-            android:id="@+id/datetimetasksent"
+            android:id="@+id/datetimedeadline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right|bottom"
             android:layout_marginTop="15dp"
+            android:gravity="right|bottom"
+            android:text="bb:cc">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/employeeTask"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:gravity="right|bottom"
             android:text="bb:cc">
 
         </TextView>
@@ -42,56 +51,37 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="75dp"
+            android:id="@+id/btnTaskUpdate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="UPDATE"
+            android:layout_marginRight="10dp"
             android:background="#000"
-            android:textColor="#fff"
-            android:layout_marginRight="10dp">
+            android:text="Edit"
+            android:textColor="#fff">
 
         </Button>
 
 
         <Button
+            android:id="@+id/btnTaskComment"
             android:layout_width="75dp"
             android:layout_height="wrap_content"
-            android:text="DELETE"
+            android:layout_marginLeft="10dp"
             android:background="#000"
-            android:textColor="#fff"
-            android:layout_marginLeft="10dp">
-
-        </Button>
-
-
-        <Button
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
             android:text="COMMENT"
-            android:background="#000"
-            android:textColor="#fff"
-            android:layout_marginLeft="10dp">
+            android:textColor="#fff">
 
         </Button>
 
-        <Button
-            android:layout_width="75dp"
-            android:layout_height="wrap_content"
-            android:text="APPROVE"
-            android:background="#000"
-            android:textColor="#fff"
-            android:layout_marginLeft="10dp">
-
-        </Button>
     </LinearLayout>
-
 
 
 </LinearLayout>
