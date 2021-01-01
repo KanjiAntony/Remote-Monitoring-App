@@ -49,7 +49,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp">
 
-        <Button
+        <!--<Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="UPLOAD"
@@ -57,17 +57,17 @@
             android:textColor="#fff"
             android:layout_marginRight="20dp">
 
-        </Button>
-
+        </Button>-->
 
 
         <Button
+            android:id="@+id/btnEmployeeTaskComment"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="COMMENT"
+            android:layout_marginLeft="20dp"
             android:background="#000"
-            android:textColor="#fff"
-            android:layout_marginLeft="20dp">
+            android:text="COMMENT"
+            android:textColor="#fff">
 
         </Button>
 

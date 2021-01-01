@@ -50,43 +50,73 @@
     </androidx.cardview.widget.CardView>
 
 
-    <ScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
+    <!--<ScrollView
         android:id="@+id/scrollable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/commentsArea"
         android:layout_below="@id/card"
+        android:scrollbars="vertical"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:scrollbars="vertical">
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_height="match_parent"
+            android:id="@+id/commentRecycler"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_margin="30dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
+    </ScrollView>-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_weight="20"
+        android:layout_height="0dp"
+        android:id="@+id/scrollView"
+        android:layout_above="@id/commentsArea"
+        android:layout_below="@id/card"
+        android:scrollbars="vertical"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/layout1">
+            </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 
     <LinearLayout
-        android:layout_height="wrap_content"
+        android:id="@+id/commentsArea"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
         <EditText
-            android:background="#fff"
+            android:id="@+id/commentText"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_width="350dp"
-            android:textSize="12sp"
-            android:textColor="#000"
+            android:background="#fff"
+            android:padding="20dp"
             android:text="Type Comment"
-            android:padding="20dp"/>
+            android:textColor="#000"
+            android:textSize="12sp" />
 
         <ImageButton
+            android:id="@+id/btnComment"
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:background="#000"

@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -164,10 +165,10 @@ public class comment_employer extends AppCompatActivity {
                 String userName = map.get("user").toString();
 
                 if(userName.equals(active_user_id)){
-                    addMessageBox(message,userName, 1);
+                    addMessageBox(message,"", 1);
                 }
                 else{
-                    addMessageBox(message,userName, 2);
+                    addMessageBox(message,"Sent by: "+userName, 2);
                 }
             }
 
@@ -200,27 +201,28 @@ public class comment_employer extends AppCompatActivity {
 
     }
 
-    public void addMessageBox(String message,String username, int type){
+    public void addMessageBox(String message,String sender_text, int type){
         TextView textView = new TextView(comment_employer.this);
         textView.setText(message);
 
         TextView textView2 = new TextView(comment_employer.this);
-        textView2.setText("Sent by: "+username);
+        textView2.setText(sender_text);
 
         LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lp2.weight = 7.0f;
 
         if(type == 1) {
-            lp2.gravity = Gravity.LEFT;
+            lp2.gravity = Gravity.RIGHT;
             lp2.topMargin = 10;
             textView.setPadding(20,20,20,20);
             textView.setBackgroundResource(R.drawable.bubble_in);
         }
         else{
-            lp2.gravity = Gravity.RIGHT;
+            lp2.gravity = Gravity.LEFT;
             lp2.topMargin = 10;
             textView.setPadding(20,20,20,20);
             textView.setBackgroundResource(R.drawable.bubble_out);
+            textView.setTextColor(Color.WHITE);
         }
         textView.setLayoutParams(lp2);
         layout.addView(textView);

@@ -116,29 +116,8 @@ import java.util.Map;
 
         });
 
-        /*mHandler = new Handler();
-
-        mHandler.postDelayed(m_Runnable,3000);*/
 
     }
-
-     private final Runnable m_Runnable = new Runnable()
-     {
-         public void run()
-
-         {
-
-             try {
-                 adapter.clear();
-                 volleyJsonObjectRequestAsync(BASE_URL + "show_manager_tasks.php");
-             } catch (JSONException e) {
-                 e.printStackTrace();
-             }
-
-             mHandler.postDelayed(m_Runnable, 1000);
-         }
-
-     };//runnable
 
 
      @Override
@@ -227,72 +206,6 @@ import java.util.Map;
 
          };
 
-         // Adding JsonObject request to request queue
-         //mRequestQueue.add(jsonObjectReq);
-         AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
-     }
-
-     public void volleyJsonObjectRequestAsync(String url) throws JSONException {
-
-         String  REQUEST_TAG = "managerTasks";
-
-         /*final ProgressDialog progressDialog = new ProgressDialog(this);
-         progressDialog.setMessage("Accessing available tasks...");
-         progressDialog.show();*/
-
-         // Instantiate the cache
-         Cache cache = new DiskBasedCache(getCacheDir(),1024*1024*100); // 5MB cache size
-
-         // Setup the network to use HttpURLConnection as the HTTP client
-         Network network = new BasicNetwork(new HurlStack());
-
-         // Instantiate the RequestQueue with cache and network
-         mRequestQueue = new RequestQueue(cache,network);
-
-         // Start the RequestQueue
-         mRequestQueue.start();
-
-         StringRequest jsonObjectReq = new StringRequest(Request.Method.POST,url,
-                 new Response.Listener<String>() {
-
-                     @Override
-                     public void onResponse(String response) {
-
-
-                         //progressDialog.hide();
-
-                         try {
-
-                             //Toast.makeText(Task.this,response,Toast.LENGTH_LONG).show();
-
-                             load_recycler(response);
-
-                         } catch(JSONException e) {
-                             e.printStackTrace();
-                         }
-
-                     }
-                 }, new Response.ErrorListener() {
-             @Override
-             public void onErrorResponse(VolleyError error) {
-                 VolleyLog.d("Error: " + error.getMessage());
-                 //progressDialog.hide();
-             }
-         }){
-
-             @Override
-             protected Map<String,String> getParams() {
-                 Map<String,String> request_map = new HashMap<>();
-                 //request_map.put(KEY_SESSION_ID,active_user_id);
-                 request_map.put(KEY_SESSION_ID,active_user_id);
-                 return request_map;
-             }
-
-
-         };
-
-         // Adding JsonObject request to request queue
-         mRequestQueue.add(jsonObjectReq);
          // Adding JsonObject request to request queue
          //mRequestQueue.add(jsonObjectReq);
          AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
