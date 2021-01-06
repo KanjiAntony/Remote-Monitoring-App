@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F2ECFF"
-    tools:context=".MainActivity2">
+    tools:context=".employee_dashboard">
 
     <TextView
         android:id="@+id/employeed"
@@ -79,7 +79,7 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/comments"
+            android:id="@+id/reports"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_columnWeight="1"
@@ -102,13 +102,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="61dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/comment"/>
+                    android:src="@drawable/report"/>
 
                 <TextView
                     android:id="@+id/report"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Comments"
+                    android:text="Reports"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
@@ -120,7 +120,6 @@
         </androidx.cardview.widget.CardView>
 
 
-
     </LinearLayout>
 
     <LinearLayout
@@ -130,7 +129,7 @@
         android:gravity="center">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/aoob"
+            android:id="@+id/aob"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_columnWeight="1"
@@ -219,13 +218,12 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#000"
-        android:onClick="Logout"
         android:text="Logout"
         android:textAlignment="center"
         android:textColor="#fff"

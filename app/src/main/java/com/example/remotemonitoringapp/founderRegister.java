@@ -3,8 +3,11 @@ package com.example.remotemonitoringapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Cache;
@@ -19,6 +22,10 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.example.remotemonitoringapp.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +61,7 @@ public class founderRegister extends AppCompatActivity {
     private String RegPassword;
     private int success;
     private String UserID;
-    private static final String BASE_URL = "https://remote.shamalandscapes.com/Mobile/Founder/";
+    private static final String BASE_URL = "https://remote.shammahgifts.co.ke/Mobile/Founder/";
     private SessionHandler session;
 
     private RequestQueue mRequestQueue;
@@ -99,7 +106,6 @@ public class founderRegister extends AppCompatActivity {
             }
         });
 
-
     }
 
     public void onLoginClick(View view) {
@@ -141,7 +147,7 @@ public class founderRegister extends AppCompatActivity {
     }
 
     public void load_dashboard() {
-        Intent i = new Intent(getApplicationContext(), communication_design_employer.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
         finish();
     }

@@ -11,24 +11,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".communication_design_employee"></activity>
+
+        <service
+            android:name="com.example.remotemonitoringapp.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
         <activity android:name=".communication_employee" />
-        <activity android:name=".aob_design_employee" />
+        <activity android:name=".aob_employer" />
+        <activity android:name=".update_aob_employer" />
+        <activity android:name=".upload_aob_employer" />
+        <activity android:name=".aob_comment_employer" />
         <activity android:name=".aob_employee" />
+        <activity android:name=".update_aob_employee" />
+        <activity android:name=".upload_aob_employee" />
+        <activity android:name=".aob_comment_employee" />
         <activity android:name=".comment_design_employee" />
         <activity android:name=".comment_employee" />
         <activity android:name=".taskpage_employee" />
-        <activity android:name=".task_employee" />
-        <activity android:name=".communication_design_employer" />
-        <activity android:name=".aob_design_employer" />
         <activity android:name=".comment_design_employer" />
         <activity android:name=".reports_employer" />
         <activity android:name=".communication_employer" />
-        <activity android:name=".aob_employer" />
         <activity android:name=".comment_employer" />
         <activity android:name=".taskpage_employer" />
         <activity android:name=".upload_employer" />
-        <activity android:name=".MainActivity2" />
+        <activity android:name=".update_employer" />
+        <activity android:name=".employee_dashboard" />
+        <activity android:name=".employer_dashboard" />
         <activity android:name=".welcome" />
         <activity android:name=".founderRegister" />
         <activity android:name=".employeeRegister" />

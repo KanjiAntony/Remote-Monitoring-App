@@ -82,6 +82,28 @@ public class SessionHandler {
 
     }
 
+    public boolean isEventLoggedIn()
+    {
+
+        Date currentDate = new Date();
+
+        long millis = mEventsPreferences.getLong(KEY_EXPIRES,0);
+
+        //if shared preferences does not have a value, then user is not logged in
+        if(millis == 0) {
+            return false;
+        }
+
+        Date expiryDate = new Date(millis);
+
+        if(currentDate.before(expiryDate)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     //fetch and return the user_id
     public User getUserDetails()
     {

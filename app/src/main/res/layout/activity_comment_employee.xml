@@ -8,44 +8,36 @@
     android:background="#F2ECFF">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="#000"
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme">
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:id="@+id/recipient"
-            android:text="Receiver Id"
-            android:textSize="16sp"
-            android:textColor="#fff"
-            android:layout_marginLeft="25dp"/>
-
-    </androidx.appcompat.widget.Toolbar>
-
-
     <androidx.cardview.widget.CardView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         android:id="@+id/card"
-        android:layout_below="@id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        app:contentPadding="30dp"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintRight_toLeftOf="parent"
         app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:layout_margin="30dp"
-        app:contentPadding="30dp">
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
 
         <TextView
-            android:layout_height="wrap_content"
+            android:id="@+id/task_desc_employee"
             android:layout_width="wrap_content"
-            android:textSize="12sp"
+            android:layout_height="wrap_content"
+            android:text="Task Description"
             android:textColor="#000"
-            android:text="Task Description"> </TextView>
+            android:textSize="12sp"></TextView>
+
+        <TextView
+            android:id="@+id/task_employer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Task Description"
+            android:textColor="#000"
+            android:textSize="12sp"></TextView>
 
     </androidx.cardview.widget.CardView>
 
@@ -110,8 +102,8 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:background="#fff"
+            android:hint="Type comment"
             android:padding="20dp"
-            android:text="Type Comment"
             android:textColor="#000"
             android:textSize="12sp" />
 

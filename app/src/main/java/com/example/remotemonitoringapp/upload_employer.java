@@ -63,7 +63,7 @@ public class upload_employer extends AppCompatActivity {
     private EditText TxtStopDate, TxtStopTime;
     private String UserID;
     private int success;
-    private static final String BASE_URL = "https://remote.shamalandscapes.com/Mobile/Employee/";
+    private static final String BASE_URL = "https://remote.shammahgifts.co.ke/Mobile/Employee/";
     private SessionHandler session;
 
     private RequestQueue mRequestQueue;
@@ -80,6 +80,15 @@ public class upload_employer extends AppCompatActivity {
     private static final String KEY_USER_ID = "UserId";
     String active_user_id;
     private static final String KEY_SESSION_ID = "session_id";
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i = new Intent(getApplicationContext(), Task.class);
+        startActivity(i);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,6 +267,12 @@ public class upload_employer extends AppCompatActivity {
 
     }
 
+    public void load_dashboard() {
+        Intent i = new Intent(getApplicationContext(), Task.class);
+        startActivity(i);
+        finish();
+    }
+
     public void volleyJsonObjectRequest(String url) {
 
         String REQUEST_TAG = "createTask";
@@ -292,15 +307,12 @@ public class upload_employer extends AppCompatActivity {
                             JSONObject jsonObject = (JSONObject) jsonArray.get(0);
 
                             success = Integer.parseInt(jsonObject.getString("success"));
-                            UserID = jsonObject.getString("user_id");
 
                             if (success == 1) {
-                                //Toast.makeText(upload_employer.this, "Task created", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(upload_employer.this, Task.class);
-                                startActivity(intent);
-                                finish();
+                                Toast.makeText(upload_employer.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                                load_dashboard();
                             } else {
-                                Toast.makeText(upload_employer.this, "Failed to create task.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(upload_employer.this, jsonObject.getString("message"), Toast.LENGTH_LONG).show();
                             }
 
                         } catch (JSONException e) {

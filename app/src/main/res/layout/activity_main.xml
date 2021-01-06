@@ -6,20 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F2ECFF"
-    tools:context=".MainActivity">
+    tools:context=".employer_dashboard">
 
     <TextView
         android:id="@+id/employeed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="16dp"
-        android:text="EMPLOYER DASHBOARD"
-        android:textColor="#000"
         android:gravity="center"
+        android:text="MANAGER DASHBOARD"
+        android:textColor="#000"
         android:textSize="34sp"
         android:textStyle="bold"
-        android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -130,7 +130,7 @@
         android:gravity="center">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/aoob"
+            android:id="@+id/aob"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_columnWeight="1"
@@ -219,13 +219,12 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/logout_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#000"
-        android:onClick="Logout"
         android:text="Logout"
         android:textAlignment="center"
         android:textColor="#fff"

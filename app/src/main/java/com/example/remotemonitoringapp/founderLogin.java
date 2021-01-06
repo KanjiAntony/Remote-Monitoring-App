@@ -42,7 +42,7 @@ public class founderLogin extends AppCompatActivity {
     private String Password;
     private int success;
     private String UserID;
-    private static final String BASE_URL = "https://remote.shamalandscapes.com/Mobile/Founder/";
+    private static final String BASE_URL = "https://remote.shammahgifts.co.ke/Mobile/Founder/";
     private SessionHandler session;
 
     private RequestQueue mRequestQueue;
@@ -144,7 +144,7 @@ public class founderLogin extends AppCompatActivity {
     }
 
     public void load_dashboard() {
-        Intent i = new Intent(getApplicationContext(), communication_design_employer.class);
+        Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
         finish();
     }

@@ -1,18 +1,37 @@
 package com.example.remotemonitoringapp;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.android.gms.tasks.Task;
 
 public class MainActivity extends AppCompatActivity{
 
    public Button founderLogin, employeeLogin;
+
+    @Override
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +65,7 @@ public class MainActivity extends AppCompatActivity{
 
         });
 
-    }
 
+    }
 
 }

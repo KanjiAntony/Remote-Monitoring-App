@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="15dp"
+    android:layout_marginBottom="20dp"
+    tools:context=".taskpage_employer">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:cardBackgroundColor="#fff"
+        app:contentPadding="50dp">
+
+        <TextView
+            android:id="@+id/aob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="abcd"
+            android:textColor="#000"
+            android:textSize="12sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/creator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="right|bottom"
+            android:text="bb:cc">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/addressed_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:gravity="right|bottom"
+            android:text="bb:cc">
+
+        </TextView>
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnAOBUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:background="#000"
+            android:text="Edit"
+            android:textColor="#fff">
+
+        </Button>
+
+
+        <Button
+            android:id="@+id/btnAOBComment"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="#000"
+            android:text="COMMENT"
+            android:textColor="#fff">
+
+        </Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>

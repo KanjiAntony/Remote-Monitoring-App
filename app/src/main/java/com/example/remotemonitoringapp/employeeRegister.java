@@ -3,8 +3,11 @@ package com.example.remotemonitoringapp;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -19,6 +22,9 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,6 +54,7 @@ public class employeeRegister extends AppCompatActivity {
     private static final String KEY_PHONE = "phone";
     private static final String KEY_EMAIL = "userEmail";
     private static final String KEY_ID = "userID";
+    private static final String KEY_TOKEN_ID = "deviceToken";
     private static final String KEY_COMPANY_NAME = "companyName";
     private static final String KEY_EMPLOYEE_DEPT = "department";
     private static final String KEY_EMPLOYEE_POSITION = "position";
@@ -59,9 +66,10 @@ public class employeeRegister extends AppCompatActivity {
     private String employee_position;
     private String RegEmail;
     private String RegPassword;
+    private String token;
     private int success;
     private String UserID;
-    private static final String BASE_URL = "https://remote.shamalandscapes.com/Mobile/Employee/";
+    private static final String BASE_URL = "https://remote.shammahgifts.co.ke/Mobile/Employee/";
     private SessionHandler session;
 
     private RequestQueue mRequestQueue;
@@ -195,6 +203,25 @@ public class employeeRegister extends AppCompatActivity {
             }
         });
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("FCM err", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+                        // Log and toast
+                        //String msg = getString(R.string.msg_token_fmt, token);
+                        //Log.w("FCM token", token);
+                        //Toast.makeText(founderRegister.this, token, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
     }
 
@@ -213,7 +240,7 @@ public class employeeRegister extends AppCompatActivity {
                 !STRING_EMPTY.equals(reg_last_name.getText().toString()) &&
                 !STRING_EMPTY.equals(reg_employee_id.getText().toString()) &&
                 !STRING_EMPTY.equals(reg_employee_phone.getText().toString()) &&
-                //!STRING_EMPTY.equals(reg_company_name.getText().toString()) &&
+                !STRING_EMPTY.equals(token) &&
                 !STRING_EMPTY.equals(reg_employee_email.getText().toString()) && !STRING_EMPTY.equals(reg_employee_password.getText().toString()) &&
                 !STRING_EMPTY.equals(reg_employee_confirm_password.getText().toString())) {
 
@@ -238,13 +265,7 @@ public class employeeRegister extends AppCompatActivity {
     }
 
     public void load_dashboard() {
-        Intent i = new Intent(getApplicationContext(), taskpage_employer.class);
-        startActivity(i);
-        finish();
-    }
-
-    public void load_employee_dashboard() {
-        Intent i = new Intent(getApplicationContext(), taskpage_employee.class);
+        Intent i = new Intent(getApplicationContext(), employeeLogin.class);
         startActivity(i);
         finish();
     }
@@ -277,7 +298,7 @@ public class employeeRegister extends AppCompatActivity {
 
                         try {
 
-                            Toast.makeText(employeeRegister.this, response, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(employeeRegister.this, response, Toast.LENGTH_LONG).show();
 
                             JSONArray jsonArray = new JSONArray(response);
                             JSONObject jsonObject = (JSONObject) jsonArray.get(0);
@@ -286,14 +307,9 @@ public class employeeRegister extends AppCompatActivity {
                             UserID = jsonObject.getString("user_id");
 
                             if (success == 1) {
-                                //set session
-                                if(employee_position.equals("Manager")) {
-                                    session.login(UserID);
+
                                     load_dashboard();
-                                } else {
-                                    session.events_login(UserID);
-                                    load_employee_dashboard();
-                                }
+
                             } else {
                                 Toast.makeText(employeeRegister.this, "Failed to create your company.", Toast.LENGTH_LONG).show();
                             }
@@ -320,6 +336,7 @@ public class employeeRegister extends AppCompatActivity {
                 httpParams.put(KEY_NAME, RegName);
                 httpParams.put(KEY_PHONE, RegPhone);
                 httpParams.put(KEY_ID, RegID);
+                httpParams.put(KEY_TOKEN_ID, token);
                 httpParams.put(KEY_EMAIL, RegEmail);
                 httpParams.put(KEY_COMPANY_NAME, RegCompanyName);
                 httpParams.put(KEY_EMPLOYEE_DEPT, RegEmployeeDept);

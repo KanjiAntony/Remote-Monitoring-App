@@ -6,5 +6,5 @@
     android:padding="10dp"
     android:textStyle="italic"
     android:fontFamily="sans-serif-medium"
-    android:background="#c7ff86"
+    android:background="#ffffff"
     />

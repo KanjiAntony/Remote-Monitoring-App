@@ -62,9 +62,11 @@ public class comment_employee extends AppCompatActivity {
     private static final String KEY_TASK_ID = "task_id";
     private String comment;
     private EditText commentTxt;
+    private String EmployeeEmail,EmployeeName;
+    private TextView task_desc,task_employer_show;
     private String UserID;
     private int success;
-    private static final String BASE_URL = "https://remote.shamalandscapes.com/Mobile/Employee/";
+    private static final String BASE_URL = "https://remote.shammahgifts.co.ke/Mobile/Employee/";
     private SessionHandler session;
 
     private RequestQueue mRequestQueue;
@@ -85,6 +87,15 @@ public class comment_employee extends AppCompatActivity {
     LinearLayout layout;
     RelativeLayout layout_2;
     ScrollView scrollView;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i = new Intent(getApplicationContext(), taskpage_employee.class);
+        startActivity(i);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,48 +122,42 @@ public class comment_employee extends AppCompatActivity {
         layout_2 = findViewById(R.id.layout2);
         scrollView = findViewById(R.id.scrollView);
 
+        task_desc = (TextView)findViewById(R.id.task_desc_employee);
+        task_employer_show = (TextView)findViewById(R.id.task_employer);
 
         //automatic process
-        /*try {
-
-            volleyJsonObjectRequestAsync(BASE_URL + "show_task_comments.php");
+        try {
+            volleyJsonObjectRequest(BASE_URL + "get_employee_task_desc.php");
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
 
         commentTxt = (EditText)findViewById(R.id.commentText);
         create_comment_btn = (ImageButton)findViewById(R.id.btnComment);
 
-        /*create_comment_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (CheckNetworkStatus.isNetworkAvailable(getApplicationContext())) {
-                    create_comment();
-                } else {
-                    Toast.makeText(comment_employer.this,
-                            "Ensure you are connected to the internet",
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        });*/
 
         Firebase.setAndroidContext(this);
-        reference1 = new Firebase("https://remoteapp-ae875-default-rtdb.firebaseio.com/messages/Kanji_Marto");
-        //reference2 = new Firebase("https://remoteapp-ae875-default-rtdb.firebaseio.com/messages/" + UserDetails.chatWith + "_" + UserDetails.username);
+        reference1 = new Firebase("https://remoteapp-ae875-default-rtdb.firebaseio.com/messages/Remote_AppTask");
 
         create_comment_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String messageText = commentTxt.getText().toString();
 
-                if(!messageText.equals("")){
+                if(!messageText.equals("") && !EmployeeEmail.equals("") && !EmployeeName.equals("") && !task_id.equals("")){
                     Map<String, String> map = new HashMap<String, String>();
                     map.put("message", messageText);
                     map.put("user", active_user_id);
+                    map.put("user_email", EmployeeEmail);
+                    map.put("user_name", EmployeeName);
                     map.put("task_id", task_id);
                     reference1.push().setValue(map);
                     //reference2.push().setValue(map);
                     commentTxt.setText("");
+                } else {
+
+                    Toast.makeText(comment_employee.this, "No field should be empty", Toast.LENGTH_LONG).show();
+
                 }
             }
         });
@@ -162,9 +167,10 @@ public class comment_employee extends AppCompatActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Map map = dataSnapshot.getValue(Map.class);
                 String message = map.get("message").toString();
-                String userName = map.get("user").toString();
+                String userId = map.get("user").toString();
+                String userName = map.get("user_name").toString();
 
-                if(userName.equals(active_user_id)){
+                if(userId.equals(active_user_id)){
                     addMessageBox(message,"", 1);
                 }
                 else{
@@ -193,11 +199,6 @@ public class comment_employee extends AppCompatActivity {
             }
         });
 
-
-
-        /*mHandler = new Handler();
-
-        mHandler.postDelayed(m_Runnable,3000);*/
 
     }
 
@@ -230,50 +231,14 @@ public class comment_employee extends AppCompatActivity {
         scrollView.fullScroll(View.FOCUS_DOWN);
     }
 
-    /*private final Runnable m_Runnable = new Runnable()
-    {
-        public void run()
 
-        {
+    public void volleyJsonObjectRequest(String url) throws JSONException {
 
-            try {
-                adapter.clear();
-                //adapter.notifyDataSetChanged();
-                volleyJsonObjectRequestAsync(BASE_URL + "show_task_comments.php");
-                adapter.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        String REQUEST_TAG = "getTaskData";
 
-            mHandler.postDelayed(m_Runnable, 5000);
-        }
-
-    };*/
-
-
-
-    public void create_comment() {
-
-        if (!STRING_EMPTY.equals(commentTxt.getText().toString())) {
-
-            comment = commentTxt.getText().toString();
-
-            volleyJsonObjectRequest(BASE_URL + "create_manager_comment.php");
-
-
-        } else {
-            Toast.makeText(comment_employee.this, "No field should be empty", Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    public void volleyJsonObjectRequest(String url) {
-
-        String REQUEST_TAG = "createComment";
-
-        /*final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Sending comment...");
-        progressDialog.show();*/
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Fetching task description...");
+        progressDialog.show();
 
         // Instantiate the cache
         Cache cache = new DiskBasedCache(getCacheDir(),1024*1024*5); // 5MB cache size
@@ -304,9 +269,12 @@ public class comment_employee extends AppCompatActivity {
                             //UserID = jsonObject.getString("user_id");
 
                             if (success == 1) {
-                                Toast.makeText(comment_employee.this, "Comment sent", Toast.LENGTH_LONG).show();
+                                EmployeeEmail = jsonObject.getString("employee_email");
+                                EmployeeName = jsonObject.getString("employee_name");
+                                task_desc.setText(jsonObject.getString("task"));
+                                task_employer_show.setText(jsonObject.getString("employer"));
                             } else {
-                                Toast.makeText(comment_employee.this, "Failed to send comment.", Toast.LENGTH_LONG).show();
+                                Toast.makeText(comment_employee.this, "Failed to get task description.", Toast.LENGTH_LONG).show();
                             }
 
                         } catch (JSONException e) {
@@ -314,21 +282,20 @@ public class comment_employee extends AppCompatActivity {
                         }
 
 
-                        //progressDialog.hide();
+                        progressDialog.hide();
 
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d("Error: " + error.getMessage());
-                //progressDialog.hide();
+                progressDialog.hide();
             }
         }) {
 
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> httpParams = new HashMap<>();
-                httpParams.put(KEY_COMMENT, comment);
                 httpParams.put(KEY_TASK_ID, task_id);
                 httpParams.put(KEY_SESSION_ID, active_user_id);
                 return httpParams;
@@ -341,104 +308,4 @@ public class comment_employee extends AppCompatActivity {
         // Adding JsonObject request to request queue
         // AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq, REQUEST_TAG);
     }
-
-    /*public void load_recycler(String json) throws JSONException
-    {
-        JSONArray jsonArray = new JSONArray(json);
-
-        //list = getData();
-
-        JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-
-        success = Integer.parseInt(jsonObject.getString("success"));
-        //UserID = jsonObject.getString("user_id");
-
-        if (success == 1) {
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-                final JSONObject jObject = (JSONObject) jsonArray.get(i);
-                list.add(new commentData(jObject.getString("comment"), "Posted  on: " + jObject.getString("datetime"),
-                        "By: " + jObject.getString("commentBy")));
-
-            }
-
-        } else {
-
-            list.add(new commentData("No comment","null","null"));
-
-        }
-
-        recyclerView = (RecyclerView)findViewById(R.id.commentRecycler);
-        adapter = new commentAdapter(list, getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(comment_employer.this));
-        //adapter.notifyItemRangeChanged(0, list.size());
-
-    }*/
-
-    /*public void volleyJsonObjectRequestAsync(String url) throws JSONException {
-
-        String  REQUEST_TAG = "managerComment";
-
-         *//*final ProgressDialog progressDialog = new ProgressDialog(this);
-         progressDialog.setMessage("Accessing available tasks...");
-         progressDialog.show();*//*
-
-        // Instantiate the cache
-        Cache cache = new DiskBasedCache(getCacheDir(),1024*1024*100); // 5MB cache size
-
-        // Setup the network to use HttpURLConnection as the HTTP client
-        Network network = new BasicNetwork(new HurlStack());
-
-        // Instantiate the RequestQueue with cache and network
-        mRequestQueue = new RequestQueue(cache,network);
-
-        // Start the RequestQueue
-        mRequestQueue.start();
-
-        StringRequest jsonObjectReq = new StringRequest(Request.Method.POST,url,
-                new Response.Listener<String>() {
-
-                    @Override
-                    public void onResponse(String response) {
-
-
-                        //progressDialog.hide();
-
-                        try {
-
-                            //Toast.makeText(Task.this,response,Toast.LENGTH_LONG).show();
-
-                            load_recycler(response);
-
-                        } catch(JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d("Error: " + error.getMessage());
-                //progressDialog.hide();
-            }
-        }){
-
-            @Override
-            protected Map<String,String> getParams() {
-                Map<String,String> request_map = new HashMap<>();
-                //request_map.put(KEY_SESSION_ID,active_user_id);
-                request_map.put(KEY_TASK_ID,task_id);
-                return request_map;
-            }
-
-
-        };
-
-        // Adding JsonObject request to request queue
-        mRequestQueue.add(jsonObjectReq);
-        // Adding JsonObject request to request queue
-        //mRequestQueue.add(jsonObjectReq);
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
-    }*/
 }

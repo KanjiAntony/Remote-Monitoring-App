@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "1050664773933",
-    "firebase_url": "https://remoteapp-ae875-default-rtdb.firebaseio.com",
-    "project_id": "remoteapp-ae875",
-    "storage_bucket": "remoteapp-ae875.appspot.com"
+    "project_number": "1099185185245",
+    "project_id": "remote2-8374a",
+    "storage_bucket": "remote2-8374a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1050664773933:android:cc3b574f7ed09953b00ba4",
+        "mobilesdk_app_id": "1:1099185185245:android:d76c2f98a6aab8ed8c5634",
         "android_client_info": {
           "package_name": "com.example.remotemonitoringapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1050664773933-a8d7goc82lpo1fmng7lv7go1uon182sj.apps.googleusercontent.com",
+          "client_id": "1099185185245-dt8bidgh9er55v7ved93ggut43n46hd5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBbYcIeJYt4cGMy9hGfLc_9U-jdhu9JmW8"
+          "current_key": "AIzaSyB7HiIDPOx-d3FgOFOkb_1wlxERhld-4D8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1050664773933-a8d7goc82lpo1fmng7lv7go1uon182sj.apps.googleusercontent.com",
+              "client_id": "1099185185245-dt8bidgh9er55v7ved93ggut43n46hd5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

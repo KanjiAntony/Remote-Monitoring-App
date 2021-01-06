@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Download Reports Here"
+            android:text="Create Reports Here"
             android:textAlignment="center"
             android:textColor="#000"
             android:textSize="18sp">
@@ -25,15 +25,15 @@
         </TextView>
 
 
-
         <Button
+            android:id="@+id/create_reports"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DOWNLOAD PDF"
-            android:textSize="18dp"
+            android:layout_margin="50dp"
             android:background="#000"
+            android:text="CREATE REPORT"
             android:textColor="#fff"
-            android:layout_margin="50dp">
+            android:textSize="18dp">
 
         </Button>
 

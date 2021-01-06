@@ -72,6 +72,18 @@ public class taskAdapter extends RecyclerView.Adapter<taskViewHolder>
             }
         });
 
+        viewHolder.btn_task_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+
+                Intent i = new Intent(context, update_employer.class);
+                i.putExtra("Task Id", list.get(position).task_id);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+
+            }
+        });
+
     }
 
     @Override

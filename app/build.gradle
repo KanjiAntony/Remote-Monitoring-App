@@ -46,6 +46,15 @@ dependencies {
 
     implementation 'com.firebase:firebase-client-android:2.5.2'
 
+    implementation 'com.google.android.gms:play-services-vision:16.2.0'
+
+    //firebase
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+
+    //Add FCM//
+
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
     implementation 'com.android.volley:volley:1.1.0'
 
     testImplementation 'junit:junit:4.12'

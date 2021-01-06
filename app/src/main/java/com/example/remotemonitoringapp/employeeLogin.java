@@ -2,12 +2,15 @@ package com.example.remotemonitoringapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.app.ProgressDialog;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Cache;
@@ -21,6 +24,10 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,11 +45,13 @@ public class employeeLogin extends AppCompatActivity {
     private static final String STRING_EMPTY = "";
     private static final String KEY_EMAIL = "loginEmail";
     private static final String KEY_PASSWORD = "loginPass";
+    private static final String KEY_TOKEN_ID = "deviceToken";
     private String UserEmail;
     private String Password;
+    private String token;
     private int success;
     private String UserID;
-    private static final String BASE_URL = "https://remote.shamalandscapes.com/Mobile/Employee/";
+    private static final String BASE_URL = "https://remote.shammahgifts.co.ke/Mobile/Employee/";
     private SessionHandler session;
 
     private RequestQueue mRequestQueue;
@@ -111,6 +120,21 @@ public class employeeLogin extends AppCompatActivity {
             }
         });
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("FCM err", "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        token = task.getResult();
+
+                    }
+                });
+
 
     }
 
@@ -133,7 +157,7 @@ public class employeeLogin extends AppCompatActivity {
 
     public void login() {
 
-        if (!STRING_EMPTY.equals(email_address.getText().toString()) && !STRING_EMPTY.equals(user_password.getText().toString())) {
+        if (!STRING_EMPTY.equals(email_address.getText().toString()) && !STRING_EMPTY.equals(token) && !STRING_EMPTY.equals(user_password.getText().toString())) {
             UserEmail = email_address.getText().toString();
             Password = user_password.getText().toString();
             volleyJsonObjectRequest(BASE_URL + "login.php");
@@ -144,13 +168,13 @@ public class employeeLogin extends AppCompatActivity {
     }
 
     public void load_dashboard() {
-        Intent i = new Intent(getApplicationContext(), Task.class);
+        Intent i = new Intent(getApplicationContext(), employer_dashboard.class);
         startActivity(i);
         finish();
     }
 
     public void load_employee_dashboard() {
-        Intent i = new Intent(getApplicationContext(), taskpage_employee.class);
+        Intent i = new Intent(getApplicationContext(), employee_dashboard.class);
         startActivity(i);
         finish();
     }
@@ -181,7 +205,7 @@ public class employeeLogin extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
-                        Toast.makeText(employeeLogin.this, response, Toast.LENGTH_LONG).show();
+                        //Toast.makeText(employeeLogin.this, response, Toast.LENGTH_LONG).show();
 
                         try {
                             JSONArray jsonArray = new JSONArray(response);
@@ -226,6 +250,7 @@ public class employeeLogin extends AppCompatActivity {
                 Map<String, String> httpParams = new HashMap<>();
                 httpParams.put(KEY_EMAIL, UserEmail);
                 httpParams.put(KEY_PASSWORD, Password);
+                httpParams.put(KEY_TOKEN_ID, token);
                 return httpParams;
             }
 
