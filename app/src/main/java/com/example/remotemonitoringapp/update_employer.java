@@ -48,7 +48,7 @@ import java.util.Map;
 public class update_employer extends AppCompatActivity {
 
     private EditText task_description;
-    private Button update_task_btn,delete_task_btn;
+    private Button update_task_btn,verify_task_btn,delete_task_btn;
     private ProgressDialog pBar;
     private static final String STRING_EMPTY = "";
     private static final String KEY_TASK_ID = "task_id";
@@ -116,6 +116,7 @@ public class update_employer extends AppCompatActivity {
         TxtStopDate = (EditText)findViewById(R.id.date);
         TxtStopTime = (EditText)findViewById(R.id.time);
         update_task_btn = (Button) findViewById(R.id.btn_update_task);
+        verify_task_btn = (Button) findViewById(R.id.btn_verify_task);
         delete_task_btn = (Button) findViewById(R.id.btn_delete_task);
         calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -235,7 +236,42 @@ public class update_employer extends AppCompatActivity {
             }
         });
 
+        //on verify button clicked
+        verify_task_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //show dialog
+
+                final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(update_employer.this);
+                alertDialogBuilder.setTitle("Verify task...");
+                alertDialogBuilder.setMessage("Are You sure?");
+                alertDialogBuilder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                volleyVerifyTaskRequest(BASE_URL+"verify_task.php");
+                            }
+                        });
+
+                alertDialogBuilder.setNegativeButton("No",new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //close
+                    }
+                });
+
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
+            }
+        });
+
+
+
     }
+
+
 
     // start of choose date methods
 
@@ -505,6 +541,72 @@ public class update_employer extends AppCompatActivity {
                             }
 
                            // Toast.makeText(update_employer.this, jsonObject.get("success").toString(), Toast.LENGTH_LONG).show();
+
+
+
+                        } catch(JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        progressDialog.hide();
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("Error: " + error.getMessage());
+                progressDialog.hide();
+            }
+        }){
+
+            @Override
+            protected Map<String,String> getParams() {
+                Map<String,String> request_map = new HashMap<>();
+                request_map.put(KEY_SESSION_ID,active_user_id);
+                request_map.put(KEY_TASK_ID,task_id);
+                return request_map;
+            }
+
+        };
+
+        // Adding JsonObject request to request queue
+        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
+    }
+
+    public void volleyVerifyTaskRequest(String url)  {
+
+        String  REQUEST_TAG = "verifyTask";
+
+
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Verifying task...");
+        progressDialog.show();
+
+        StringRequest jsonObjectReq = new StringRequest(Request.Method.POST,url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        //Toast.makeText(EditDrink.this, response, Toast.LENGTH_LONG).show();
+
+                        try {
+                            //JSONObject obj = new JSONObject(response);
+                            JSONArray jsonArray = new JSONArray(response);
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+                            //for(int i=0;i<obj.length();i++) {
+                            if((jsonObject.get("success").toString()).equals("1")) {
+                                Toast.makeText(update_employer.this, jsonObject.get("message").toString(), Toast.LENGTH_LONG).show();
+
+                                Intent i = new Intent(update_employer.this, Task.class);
+                                startActivity(i);
+
+                            } else {
+                                Toast.makeText(update_employer.this, jsonObject.get("message").toString(), Toast.LENGTH_LONG).show();
+                            }
+
+                            // Toast.makeText(update_employer.this, jsonObject.get("success").toString(), Toast.LENGTH_LONG).show();
 
 
 

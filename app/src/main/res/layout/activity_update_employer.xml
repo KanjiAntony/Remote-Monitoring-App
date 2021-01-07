@@ -128,6 +128,14 @@
         android:gravity="right">
 
       <Button
+          android:id="@+id/btn_verify_task"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="7dp"
+          android:text="Verify"
+          android:textColor="#000000" />
+
+      <Button
           android:id="@+id/btn_update_task"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"

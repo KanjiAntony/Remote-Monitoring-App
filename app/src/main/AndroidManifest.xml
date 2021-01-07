@@ -33,6 +33,7 @@
         <activity android:name=".taskpage_employee" />
         <activity android:name=".comment_design_employer" />
         <activity android:name=".reports_employer" />
+        <activity android:name=".reports_employee" />
         <activity android:name=".communication_employer" />
         <activity android:name=".comment_employer" />
         <activity android:name=".taskpage_employer" />
